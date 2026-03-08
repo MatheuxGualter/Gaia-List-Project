@@ -6,8 +6,8 @@ require_once 'includes/header_privado.php';
 /* Dados simulados */
 $usuario = array(
     'id' => 1,
-    'nome' => isset($_SESSION['nome']) ? $_SESSION['nome'] : 'João Silva',
-    'email' => isset($_SESSION['email']) ? $_SESSION['email'] : 'joao@email.com',
+    'nome' => isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Matheus Gualter',
+    'email' => isset($_SESSION['email']) ? $_SESSION['email'] : 'matheus@email.com',
     'perfil' => isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'editor',
     'data_cadastro' => '01/03/2026'
 );

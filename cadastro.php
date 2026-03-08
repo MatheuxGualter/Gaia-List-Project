@@ -1,7 +1,25 @@
 <?php
+session_start();
+
+/* Se ja estiver logado, redirecionar para o dashboard */
+if (isset($_SESSION['logado']) && $_SESSION['logado'] === true) {
+    header('Location: dashboard.php');
+    exit();
+}
+
 $tituloPagina = 'Cadastro';
 $paginaAtiva = 'cadastro';
 require_once 'includes/header.php';
+
+/* Ler mensagem flash da sessao */
+$mensagem = '';
+$tipoMensagem = '';
+if (isset($_SESSION['mensagem'])) {
+    $mensagem = $_SESSION['mensagem'];
+    $tipoMensagem = isset($_SESSION['tipo_mensagem']) ? $_SESSION['tipo_mensagem'] : 'info';
+    unset($_SESSION['mensagem']);
+    unset($_SESSION['tipo_mensagem']);
+}
 ?>
 
         <!-- Cadastro Section -->
@@ -13,6 +31,13 @@ require_once 'includes/header.php';
                         <h2>Criar Conta</h2>
                         <p>Preencha os dados para se cadastrar no Gaia List</p>
                     </div>
+
+                    <?php if ($mensagem !== '') : ?>
+                    <div class="alert alert-<?php echo htmlspecialchars($tipoMensagem); ?> alert-dismissible" role="alert">
+                        <?php echo htmlspecialchars($mensagem); ?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+                    </div>
+                    <?php endif; ?>
 
                     <form id="formCadastro" action="auth/cadastrar.php" method="POST">
                         <!-- Nome -->

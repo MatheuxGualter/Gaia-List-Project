@@ -1,7 +1,12 @@
 <!-- includes/header_privado.php -->
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+session_start();
+
+/* Proteger pagina: redirecionar se nao estiver logado */
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
+    session_destroy();
+    header('Location: login.php');
+    exit();
 }
 ?>
 <!DOCTYPE html>

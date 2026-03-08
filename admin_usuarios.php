@@ -3,13 +3,19 @@ $tituloPagina = 'Administração de Usuários';
 $paginaAtiva = 'admin';
 require_once 'includes/header_privado.php';
 
+/* Somente editores podem acessar esta pagina */
+if (!isset($_SESSION['perfil']) || $_SESSION['perfil'] !== 'editor') {
+    header('Location: dashboard.php');
+    exit();
+}
+
 /* Dados simulados */
 $usuarios = array(
-    array('id' => 1, 'nome' => 'João Silva', 'email' => 'joao@email.com', 'perfil' => 'editor', 'data_cadastro' => '01/03/2026'),
-    array('id' => 2, 'nome' => 'Maria Souza', 'email' => 'maria@email.com', 'perfil' => 'comentador', 'data_cadastro' => '02/03/2026'),
-    array('id' => 3, 'nome' => 'Pedro Lima', 'email' => 'pedro@email.com', 'perfil' => 'visualizador', 'data_cadastro' => '03/03/2026'),
-    array('id' => 4, 'nome' => 'Ana Costa', 'email' => 'ana@email.com', 'perfil' => 'editor', 'data_cadastro' => '04/03/2026'),
-    array('id' => 5, 'nome' => 'Carlos Mendes', 'email' => 'carlos@email.com', 'perfil' => 'comentador', 'data_cadastro' => '05/03/2026')
+    array('id' => 1, 'nome' => 'Matheus Gualter', 'email' => 'matheus@email.com', 'perfil' => 'editor', 'data_cadastro' => '01/03/2026'),
+    array('id' => 2, 'nome' => 'Pedro Emilio', 'email' => 'pedro@email.com', 'perfil' => 'editor', 'data_cadastro' => '02/03/2026'),
+    array('id' => 3, 'nome' => 'Fabricio', 'email' => 'fabricio@email.com', 'perfil' => 'comentador', 'data_cadastro' => '03/03/2026'),
+    array('id' => 4, 'nome' => 'Joao Gabriel', 'email' => 'joaogabriel@email.com', 'perfil' => 'comentador', 'data_cadastro' => '04/03/2026'),
+    array('id' => 5, 'nome' => 'Joao Guilherme', 'email' => 'joaoguilherme@email.com', 'perfil' => 'visualizador', 'data_cadastro' => '05/03/2026')
 );
 ?>
 
