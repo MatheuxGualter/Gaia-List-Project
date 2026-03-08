@@ -2,14 +2,21 @@
 $tituloPagina = 'Meu Perfil';
 $paginaAtiva = 'perfil';
 require_once 'includes/header_privado.php';
+require_once 'includes/conexao.php';
 
-/* Dados simulados */
+/* Buscar dados do usuario logado no BD */
+$sql = "SELECT id, nome, email, perfil, data_cadastro FROM usuarios WHERE id = ?";
+$stmt = $PDO->prepare($sql);
+$stmt->bindParam(1, $_SESSION['usuario_id']);
+$stmt->execute();
+$usuarioDB = $stmt->fetch(PDO::FETCH_OBJ);
+
 $usuario = array(
-    'id' => 1,
-    'nome' => isset($_SESSION['nome']) ? $_SESSION['nome'] : 'Matheus Gualter',
-    'email' => isset($_SESSION['email']) ? $_SESSION['email'] : 'matheus@email.com',
-    'perfil' => isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'editor',
-    'data_cadastro' => '01/03/2026'
+    'id' => $usuarioDB->id,
+    'nome' => $usuarioDB->nome,
+    'email' => $usuarioDB->email,
+    'perfil' => $usuarioDB->perfil,
+    'data_cadastro' => date('d/m/Y', strtotime($usuarioDB->data_cadastro))
 );
 ?>
 

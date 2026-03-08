@@ -2,27 +2,78 @@
 $tituloPagina = 'Tarefas';
 $paginaAtiva = 'tarefas';
 require_once 'includes/header_privado.php';
+require_once 'includes/conexao.php';
 
-/* Dados simulados */
-$listas = array(
-    array('id' => 1, 'nome' => 'Design'),
-    array('id' => 2, 'nome' => 'Backend'),
-    array('id' => 3, 'nome' => 'Testes')
-);
+/* Perfil do usuario */
+$perfilUsuario = isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'visualizador';
 
-$tarefas = array(
-    array('id' => 1, 'titulo' => 'Criar wireframe da página inicial', 'descricao' => 'Desenhar o layout completo da home page com todas as seções.', 'lista' => 'Design', 'status' => 'concluida', 'data_criacao' => '05/03/2026', 'comentarios' => 2),
-    array('id' => 2, 'titulo' => 'Implementar autenticação de usuários', 'descricao' => 'Sistema de login e cadastro com PHP e sessões.', 'lista' => 'Backend', 'status' => 'andamento', 'data_criacao' => '06/03/2026', 'comentarios' => 1),
-    array('id' => 3, 'titulo' => 'Configurar banco de dados MySQL', 'descricao' => 'Criar tabelas de usuários, tarefas, listas e comentários.', 'lista' => 'Backend', 'status' => 'andamento', 'data_criacao' => '06/03/2026', 'comentarios' => 0),
-    array('id' => 4, 'titulo' => 'Escrever testes unitários', 'descricao' => 'Testar funções de CRUD e autenticação.', 'lista' => 'Testes', 'status' => 'pendente', 'data_criacao' => '06/03/2026', 'comentarios' => 0),
-    array('id' => 5, 'titulo' => 'Revisar documentação do projeto', 'descricao' => 'Atualizar README e comentários no código.', 'lista' => 'Testes', 'status' => 'pendente', 'data_criacao' => '05/03/2026', 'comentarios' => 3)
-);
+/* Buscar todas as listas */
+$stmt = $PDO->prepare("SELECT id, nome FROM listas ORDER BY nome");
+$stmt->execute();
+$listas = array();
+$listasNomes = array();
+$row = $stmt->fetch(PDO::FETCH_OBJ);
+while ($row) {
+    $listas[] = array('id' => $row->id, 'nome' => $row->nome);
+    $listasNomes[$row->id] = $row->nome;
+    $row = $stmt->fetch(PDO::FETCH_OBJ);
+}
 
+/* Contar comentarios por tarefa (sem GROUP BY) */
+$stmt = $PDO->prepare("SELECT tarefa_id FROM comentarios");
+$stmt->execute();
+$contadorComentarios = array();
+$rowC = $stmt->fetch(PDO::FETCH_OBJ);
+while ($rowC) {
+    if (isset($contadorComentarios[$rowC->tarefa_id])) {
+        $contadorComentarios[$rowC->tarefa_id] = $contadorComentarios[$rowC->tarefa_id] + 1;
+    } else {
+        $contadorComentarios[$rowC->tarefa_id] = 1;
+    }
+    $rowC = $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+/* Filtros */
 $filtroStatus = isset($_GET['status']) ? $_GET['status'] : '';
 $filtroLista = isset($_GET['lista']) ? $_GET['lista'] : '';
 
-/* Perfil simulado — será substituido por $_SESSION na Etapa 4 */
-$perfilUsuario = isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'editor';
+/* Buscar tarefas com filtros */
+if ($filtroStatus !== '' && $filtroLista !== '') {
+    $sql = "SELECT id, titulo, descricao, status, lista_id, data_criacao FROM tarefas WHERE status = ? AND lista_id = ? ORDER BY data_criacao DESC";
+    $stmt = $PDO->prepare($sql);
+    $stmt->bindParam(1, $filtroStatus);
+    $stmt->bindParam(2, $filtroLista);
+} elseif ($filtroStatus !== '') {
+    $sql = "SELECT id, titulo, descricao, status, lista_id, data_criacao FROM tarefas WHERE status = ? ORDER BY data_criacao DESC";
+    $stmt = $PDO->prepare($sql);
+    $stmt->bindParam(1, $filtroStatus);
+} elseif ($filtroLista !== '') {
+    $sql = "SELECT id, titulo, descricao, status, lista_id, data_criacao FROM tarefas WHERE lista_id = ? ORDER BY data_criacao DESC";
+    $stmt = $PDO->prepare($sql);
+    $stmt->bindParam(1, $filtroLista);
+} else {
+    $sql = "SELECT id, titulo, descricao, status, lista_id, data_criacao FROM tarefas ORDER BY data_criacao DESC";
+    $stmt = $PDO->prepare($sql);
+}
+$stmt->execute();
+
+$tarefas = array();
+$row = $stmt->fetch(PDO::FETCH_OBJ);
+while ($row) {
+    $nomeLista = isset($listasNomes[$row->lista_id]) ? $listasNomes[$row->lista_id] : 'Sem lista';
+    $totalComents = isset($contadorComentarios[$row->id]) ? $contadorComentarios[$row->id] : 0;
+    $tarefas[] = array(
+        'id' => $row->id,
+        'titulo' => $row->titulo,
+        'descricao' => $row->descricao !== null ? $row->descricao : '',
+        'lista' => $nomeLista,
+        'lista_id' => $row->lista_id,
+        'status' => $row->status,
+        'data_criacao' => date('d/m/Y', strtotime($row->data_criacao)),
+        'comentarios' => $totalComents
+    );
+    $row = $stmt->fetch(PDO::FETCH_OBJ);
+}
 ?>
 
         <!-- Tarefas -->
@@ -86,12 +137,21 @@ $perfilUsuario = isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'editor';
                                 </div>
                                 <?php if ($perfilUsuario === 'editor') : ?>
                                 <div class="tarefa-acoes">
-                                    <button class="btn btn-sm btn-gaia-outline" title="Editar">
+                                    <button class="btn btn-sm btn-gaia-outline btn-editar-tarefa" title="Editar"
+                                            data-bs-toggle="modal" data-bs-target="#modalEditarTarefa"
+                                            data-id="<?php echo $t['id']; ?>"
+                                            data-titulo="<?php echo htmlspecialchars($t['titulo']); ?>"
+                                            data-descricao="<?php echo htmlspecialchars($t['descricao']); ?>"
+                                            data-lista="<?php echo $t['lista_id']; ?>"
+                                            data-status="<?php echo $t['status']; ?>">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-outline-danger" title="Excluir">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
+                                    <form action="acoes/tarefa_excluir.php" method="POST" class="d-inline">
+                                        <input type="hidden" name="tarefa_id" value="<?php echo $t['id']; ?>">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
                                 <?php endif; ?>
                             </div>
@@ -112,9 +172,9 @@ $perfilUsuario = isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'editor';
                                     </span>
                                 <?php endif; ?>
 
-                                <span class="tarefa-meta">
-                                    <i class="bi bi-chat-dots"></i> <?php echo $t['comentarios']; ?>
-                                </span>
+                                <a href="tarefa_detalhes.php?id=<?php echo $t['id']; ?>" class="tarefa-meta tarefa-meta-link" title="Ver comentários">
+                                    <i class="bi bi-chat-dots"></i> <?php echo $t['comentarios']; ?> comentário(s)
+                                </a>
                                 <span class="tarefa-meta">
                                     <i class="bi bi-calendar3"></i> <?php echo $t['data_criacao']; ?>
                                 </span>
@@ -180,6 +240,67 @@ $perfilUsuario = isset($_SESSION['perfil']) ? $_SESSION['perfil'] : 'editor';
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                             <button type="submit" class="btn btn-gaia-primary">
                                 <i class="bi bi-check-lg"></i> Criar Tarefa
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Editar Tarefa -->
+        <div class="modal fade" id="modalEditarTarefa" tabindex="-1" aria-labelledby="modalEditarTarefaLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content modal-gaia">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalEditarTarefaLabel">
+                            <i class="bi bi-pencil-square"></i> Editar Tarefa
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                    </div>
+                    <form id="formEditarTarefa" action="acoes/tarefa_editar.php" method="POST">
+                        <input type="hidden" id="editarTarefaId" name="tarefa_id" value="">
+                        <div class="modal-body">
+                            <!-- Título -->
+                            <div class="mb-3">
+                                <label for="editarTarefaTitulo" class="form-label">Título</label>
+                                <input type="text" class="form-control" id="editarTarefaTitulo" name="titulo"
+                                       placeholder="Nome da tarefa" required>
+                                <div class="invalid-feedback-custom"></div>
+                            </div>
+
+                            <!-- Descrição -->
+                            <div class="mb-3">
+                                <label for="editarTarefaDescricao" class="form-label">Descrição</label>
+                                <textarea class="form-control" id="editarTarefaDescricao" name="descricao"
+                                          rows="3" placeholder="Descreva a tarefa"></textarea>
+                            </div>
+
+                            <!-- Lista -->
+                            <div class="mb-3">
+                                <label for="editarTarefaLista" class="form-label">Lista</label>
+                                <select class="form-select" id="editarTarefaLista" name="lista_id" required>
+                                    <option value="">Selecione uma lista</option>
+                                    <?php for ($i = 0; $i < count($listas); $i++) : ?>
+                                    <option value="<?php echo $listas[$i]['id']; ?>"><?php echo $listas[$i]['nome']; ?></option>
+                                    <?php endfor; ?>
+                                </select>
+                                <div class="invalid-feedback-custom"></div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="mb-3">
+                                <label for="editarTarefaStatus" class="form-label">Status</label>
+                                <select class="form-select" id="editarTarefaStatus" name="status">
+                                    <option value="pendente">Pendente</option>
+                                    <option value="andamento">Em Andamento</option>
+                                    <option value="concluida">Concluída</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-gaia-primary">
+                                <i class="bi bi-check-lg"></i> Salvar Alterações
                             </button>
                         </div>
                     </form>

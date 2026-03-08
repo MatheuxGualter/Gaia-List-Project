@@ -316,4 +316,97 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    /* --- Populacao do Modal Editar Tarefa --- */
+    var btnsEditarTarefa = document.querySelectorAll('.btn-editar-tarefa');
+    for (var i = 0; i < btnsEditarTarefa.length; i++) {
+        btnsEditarTarefa[i].addEventListener('click', function () {
+            var btn = this;
+            document.getElementById('editarTarefaId').value = btn.getAttribute('data-id');
+            document.getElementById('editarTarefaTitulo').value = btn.getAttribute('data-titulo');
+            document.getElementById('editarTarefaDescricao').value = btn.getAttribute('data-descricao');
+            document.getElementById('editarTarefaLista').value = btn.getAttribute('data-lista');
+            document.getElementById('editarTarefaStatus').value = btn.getAttribute('data-status');
+        });
+    }
+
+    /* --- Validacao Editar Tarefa --- */
+    var formEditarTarefa = document.getElementById('formEditarTarefa');
+    if (formEditarTarefa) {
+        formEditarTarefa.addEventListener('submit', function (e) {
+            var valido = true;
+            var titulo = document.getElementById('editarTarefaTitulo');
+            var lista = document.getElementById('editarTarefaLista');
+
+            limparValidacao(titulo);
+            limparValidacao(lista);
+
+            if (titulo.value.length === 0) {
+                mostrarErro(titulo, 'Informe o titulo da tarefa.');
+                valido = false;
+            } else if (titulo.value.length < 3) {
+                mostrarErro(titulo, 'O titulo deve ter pelo menos 3 caracteres.');
+                valido = false;
+            } else {
+                mostrarSucesso(titulo);
+            }
+
+            if (lista.value === '') {
+                mostrarErro(lista, 'Selecione uma lista.');
+                valido = false;
+            } else {
+                mostrarSucesso(lista);
+            }
+
+            if (!valido) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    /* --- Populacao do Modal Editar Lista --- */
+    var btnsEditarLista = document.querySelectorAll('.btn-editar-lista');
+    for (var j = 0; j < btnsEditarLista.length; j++) {
+        btnsEditarLista[j].addEventListener('click', function () {
+            var btn = this;
+            document.getElementById('editarListaId').value = btn.getAttribute('data-id');
+            document.getElementById('editarListaNome').value = btn.getAttribute('data-nome');
+            document.getElementById('editarListaDescricao').value = btn.getAttribute('data-descricao');
+        });
+    }
+
+    /* --- Validacao Editar Lista --- */
+    var formEditarLista = document.getElementById('formEditarLista');
+    if (formEditarLista) {
+        formEditarLista.addEventListener('submit', function (e) {
+            var valido = true;
+            var nome = document.getElementById('editarListaNome');
+
+            limparValidacao(nome);
+
+            if (nome.value.length === 0) {
+                mostrarErro(nome, 'Informe o nome da lista.');
+                valido = false;
+            } else if (nome.value.length < 2) {
+                mostrarErro(nome, 'O nome deve ter pelo menos 2 caracteres.');
+                valido = false;
+            } else {
+                mostrarSucesso(nome);
+            }
+
+            if (!valido) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    /* --- Populacao do Modal Editar Usuario (Admin) --- */
+    var btnsEditarUsuario = document.querySelectorAll('.btn-editar-usuario');
+    for (var k = 0; k < btnsEditarUsuario.length; k++) {
+        btnsEditarUsuario[k].addEventListener('click', function () {
+            var btn = this;
+            document.getElementById('editarUsuarioId').value = btn.getAttribute('data-id');
+            document.getElementById('editarUsuarioPerfil').value = btn.getAttribute('data-perfil');
+        });
+    }
+
 });

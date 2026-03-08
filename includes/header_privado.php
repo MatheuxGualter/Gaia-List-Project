@@ -94,3 +94,23 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
     <!-- Conteúdo Principal -->
     <main>
+
+<?php
+/* Ler mensagem flash da sessao */
+$msgFlash = '';
+$tipoFlash = '';
+if (isset($_SESSION['mensagem'])) {
+    $msgFlash = $_SESSION['mensagem'];
+    $tipoFlash = isset($_SESSION['tipo_mensagem']) ? $_SESSION['tipo_mensagem'] : 'info';
+    unset($_SESSION['mensagem']);
+    unset($_SESSION['tipo_mensagem']);
+}
+?>
+<?php if ($msgFlash !== '') : ?>
+        <div class="container mt-3">
+            <div class="alert alert-<?php echo htmlspecialchars($tipoFlash); ?> alert-dismissible" role="alert">
+                <?php echo htmlspecialchars($msgFlash); ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+            </div>
+        </div>
+<?php endif; ?>

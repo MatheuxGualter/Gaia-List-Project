@@ -9,14 +9,23 @@ if (!isset($_SESSION['perfil']) || $_SESSION['perfil'] !== 'editor') {
     exit();
 }
 
-/* Dados simulados */
-$usuarios = array(
-    array('id' => 1, 'nome' => 'Matheus Gualter', 'email' => 'matheus@email.com', 'perfil' => 'editor', 'data_cadastro' => '01/03/2026'),
-    array('id' => 2, 'nome' => 'Pedro Emilio', 'email' => 'pedro@email.com', 'perfil' => 'editor', 'data_cadastro' => '02/03/2026'),
-    array('id' => 3, 'nome' => 'Fabricio', 'email' => 'fabricio@email.com', 'perfil' => 'comentador', 'data_cadastro' => '03/03/2026'),
-    array('id' => 4, 'nome' => 'Joao Gabriel', 'email' => 'joaogabriel@email.com', 'perfil' => 'comentador', 'data_cadastro' => '04/03/2026'),
-    array('id' => 5, 'nome' => 'Joao Guilherme', 'email' => 'joaoguilherme@email.com', 'perfil' => 'visualizador', 'data_cadastro' => '05/03/2026')
-);
+/* Buscar todos os usuarios do BD */
+require_once 'includes/conexao.php';
+
+$stmt = $PDO->prepare("SELECT id, nome, email, perfil, data_cadastro FROM usuarios ORDER BY id");
+$stmt->execute();
+$usuarios = array();
+$row = $stmt->fetch(PDO::FETCH_OBJ);
+while ($row) {
+    $usuarios[] = array(
+        'id' => $row->id,
+        'nome' => $row->nome,
+        'email' => $row->email,
+        'perfil' => $row->perfil,
+        'data_cadastro' => date('d/m/Y', strtotime($row->data_cadastro))
+    );
+    $row = $stmt->fetch(PDO::FETCH_OBJ);
+}
 ?>
 
         <!-- Admin Usuários -->
@@ -75,13 +84,18 @@ $usuarios = array(
                                     <td class="text-muted"><?php echo $u['data_cadastro']; ?></td>
                                     <td>
                                         <div class="d-flex gap-1">
-                                            <button class="btn btn-sm btn-gaia-outline" title="Alterar Perfil"
-                                                    data-bs-toggle="modal" data-bs-target="#modalEditarUsuario">
+                                            <button class="btn btn-sm btn-gaia-outline btn-editar-usuario" title="Alterar Perfil"
+                                                    data-bs-toggle="modal" data-bs-target="#modalEditarUsuario"
+                                                    data-id="<?php echo $u['id']; ?>"
+                                                    data-perfil="<?php echo $u['perfil']; ?>">
                                                 <i class="bi bi-pencil"></i>
                                             </button>
-                                            <button class="btn btn-sm btn-outline-danger" title="Excluir Usuário">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
+                                            <form action="acoes/admin_excluir.php" method="POST" class="d-inline">
+                                                <input type="hidden" name="usuario_id" value="<?php echo $u['id']; ?>">
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Excluir Usu&#225;rio">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
                                         </div>
                                     </td>
                                 </tr>

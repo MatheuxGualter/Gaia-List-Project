@@ -2,21 +2,61 @@
 $tituloPagina = 'Dashboard';
 $paginaAtiva = 'dashboard';
 require_once 'includes/header_privado.php';
+require_once 'includes/conexao.php';
 
-/* Dados simulados */
-$totalTarefas = 12;
-$tarefasPendentes = 5;
-$tarefasAndamento = 3;
-$tarefasConcluidas = 4;
-$totalListas = 3;
+/* Contar tarefas por status */
+$stmt = $PDO->prepare("SELECT COUNT(*) AS total FROM tarefas");
+$stmt->execute();
+$totalTarefas = $stmt->fetch(PDO::FETCH_OBJ)->total;
 
-$tarefasRecentes = array(
-    array('id' => 1, 'titulo' => 'Criar wireframe da página inicial', 'lista' => 'Design', 'status' => 'concluida', 'data' => '07/03/2026'),
-    array('id' => 2, 'titulo' => 'Implementar autenticação de usuários', 'lista' => 'Backend', 'status' => 'andamento', 'data' => '07/03/2026'),
-    array('id' => 3, 'titulo' => 'Configurar banco de dados MySQL', 'lista' => 'Backend', 'status' => 'andamento', 'data' => '06/03/2026'),
-    array('id' => 4, 'titulo' => 'Escrever testes unitários', 'lista' => 'Testes', 'status' => 'pendente', 'data' => '06/03/2026'),
-    array('id' => 5, 'titulo' => 'Revisar documentação do projeto', 'lista' => 'Documentação', 'status' => 'pendente', 'data' => '05/03/2026')
-);
+$status = 'pendente';
+$stmt = $PDO->prepare("SELECT COUNT(*) AS total FROM tarefas WHERE status = ?");
+$stmt->bindParam(1, $status);
+$stmt->execute();
+$tarefasPendentes = $stmt->fetch(PDO::FETCH_OBJ)->total;
+
+$status = 'andamento';
+$stmt = $PDO->prepare("SELECT COUNT(*) AS total FROM tarefas WHERE status = ?");
+$stmt->bindParam(1, $status);
+$stmt->execute();
+$tarefasAndamento = $stmt->fetch(PDO::FETCH_OBJ)->total;
+
+$status = 'concluida';
+$stmt = $PDO->prepare("SELECT COUNT(*) AS total FROM tarefas WHERE status = ?");
+$stmt->bindParam(1, $status);
+$stmt->execute();
+$tarefasConcluidas = $stmt->fetch(PDO::FETCH_OBJ)->total;
+
+$stmt = $PDO->prepare("SELECT COUNT(*) AS total FROM listas");
+$stmt->execute();
+$totalListas = $stmt->fetch(PDO::FETCH_OBJ)->total;
+
+/* Buscar nomes das listas para lookup */
+$stmt = $PDO->prepare("SELECT id, nome FROM listas");
+$stmt->execute();
+$listasNomes = array();
+$row = $stmt->fetch(PDO::FETCH_OBJ);
+while ($row) {
+    $listasNomes[$row->id] = $row->nome;
+    $row = $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+/* Tarefas recentes (ultimas 5) */
+$stmt = $PDO->prepare("SELECT id, titulo, status, lista_id, data_criacao FROM tarefas ORDER BY data_criacao DESC LIMIT 5");
+$stmt->execute();
+$tarefasRecentes = array();
+$row = $stmt->fetch(PDO::FETCH_OBJ);
+while ($row) {
+    $nomeLista = isset($listasNomes[$row->lista_id]) ? $listasNomes[$row->lista_id] : 'Sem lista';
+    $tarefasRecentes[] = array(
+        'id' => $row->id,
+        'titulo' => $row->titulo,
+        'lista' => $nomeLista,
+        'status' => $row->status,
+        'data' => date('d/m/Y', strtotime($row->data_criacao))
+    );
+    $row = $stmt->fetch(PDO::FETCH_OBJ);
+}
 ?>
 
         <!-- Dashboard -->
