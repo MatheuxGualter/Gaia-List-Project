@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             campo.className = classes + ' is-invalid-custom';
         }
         /* Remover classe de sucesso se existir */
-        campo.className = campo.className.replace(' is-valid-custom', '');
+        campo.className = removerTexto(campo.className, ' is-valid-custom');
 
         /* Encontrar ou criar o elemento de feedback */
         var container = campo.parentNode;
@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
             campo.className = classes + ' is-valid-custom';
         }
         /* Remover classe de erro se existir */
-        campo.className = campo.className.replace(' is-invalid-custom', '');
+        campo.className = removerTexto(campo.className, ' is-invalid-custom');
 
         /* Esconder feedback de erro se existir */
         var container = campo.parentNode;
@@ -155,9 +155,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function removerTexto(texto, trecho) {
+        var pos = texto.indexOf(trecho);
+        if (pos === -1) {
+            return texto;
+        }
+        return texto.substr(0, pos) + texto.substr(pos + trecho.length);
+    }
+
     function limparValidacao(campo) {
-        campo.className = campo.className.replace(' is-invalid-custom', '');
-        campo.className = campo.className.replace(' is-valid-custom', '');
+        campo.className = removerTexto(campo.className, ' is-invalid-custom');
+        campo.className = removerTexto(campo.className, ' is-valid-custom');
 
         var container = campo.parentNode;
         var feedback = container.querySelector('.invalid-feedback-custom');

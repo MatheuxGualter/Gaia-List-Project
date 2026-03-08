@@ -414,11 +414,13 @@ main {
     display: block;
 }
 
-.form-control.is-invalid-custom {
+.form-control.is-invalid-custom,
+.form-select.is-invalid-custom {
     border-color: #dc3545;
 }
 
-.form-control.is-valid-custom {
+.form-control.is-valid-custom,
+.form-select.is-valid-custom {
     border-color: #AB47BC;
 }
 
@@ -459,11 +461,7 @@ main {
     border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* ========================================
-   AREA PRIVADA
-   ======================================== */
-
-/* --- Navbar Privada (extras) --- */
+/* --- Navbar Privada --- */
 .nav-user-info {
     font-size: 0.9rem;
     color: #212529 !important;
