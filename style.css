@@ -459,6 +459,471 @@ main {
     border-color: rgba(255, 255, 255, 0.2);
 }
 
+/* ========================================
+   AREA PRIVADA
+   ======================================== */
+
+/* --- Navbar Privada (extras) --- */
+.nav-user-info {
+    font-size: 0.9rem;
+    color: #212529 !important;
+    font-weight: 500;
+}
+
+.nav-perfil-badge {
+    display: inline-block;
+    background-color: #f3e5f5;
+    color: #6A1B9A;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15rem 0.5rem;
+    border-radius: 10px;
+    text-transform: capitalize;
+    margin-left: 0.3rem;
+}
+
+.perfil-badge-grande {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+}
+
+.btn-nav-sair {
+    color: #6A1B9A !important;
+    border: 2px solid #6A1B9A;
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 0.3rem 1rem !important;
+    font-size: 0.9rem;
+}
+
+.btn-nav-sair:hover {
+    background-color: #6A1B9A;
+    color: #ffffff !important;
+}
+
+/* --- Botões Padrão Área Privada --- */
+.btn-gaia-primary {
+    background-color: #6A1B9A;
+    color: #ffffff;
+    border: none;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+}
+
+.btn-gaia-primary:hover {
+    background-color: #4A148C;
+    color: #ffffff;
+}
+
+.btn-gaia-outline {
+    color: #6A1B9A;
+    border: 1px solid #6A1B9A;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-gaia-outline:hover {
+    background-color: #6A1B9A;
+    color: #ffffff;
+}
+
+.badge.bg-gaia {
+    background-color: #6A1B9A !important;
+}
+
+/* --- Page Section (genérico) --- */
+.page-section {
+    padding: 2rem 0;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.page-header h2 {
+    font-weight: 700;
+    color: #4A148C;
+    font-size: 1.6rem;
+    margin-bottom: 0.2rem;
+}
+
+.page-header h2 i {
+    margin-right: 0.3rem;
+}
+
+/* --- Dashboard --- */
+.dashboard-section {
+    padding: 2rem 0;
+}
+
+.dashboard-header {
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-header h2 {
+    font-weight: 700;
+    color: #4A148C;
+    font-size: 1.6rem;
+    margin-bottom: 0.2rem;
+}
+
+.dash-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: 100%;
+}
+
+.dash-card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.dash-icon-total {
+    background-color: #f3e5f5;
+    color: #6A1B9A;
+}
+
+.dash-icon-pendente {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.dash-icon-andamento {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.dash-icon-concluida {
+    background-color: #ede7f6;
+    color: #4A148C;
+}
+
+.dash-card-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.dash-card-number {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #212529;
+    line-height: 1;
+}
+
+.dash-card-label {
+    font-size: 0.8rem;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* --- Atalhos Rápidos --- */
+.dash-shortcut {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    border: 2px dashed #CE93D8;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    color: #6A1B9A;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.dash-shortcut:hover {
+    background-color: #f3e5f5;
+    border-color: #6A1B9A;
+    color: #4A148C;
+}
+
+/* --- Tabela Dashboard / Admin --- */
+.dash-table-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+}
+
+.dash-table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.dash-table-header h5 {
+    font-weight: 700;
+    color: #4A148C;
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+
+.dash-table {
+    margin-bottom: 0;
+}
+
+.dash-table thead th {
+    background-color: #f5f3f7;
+    color: #6c757d;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 0.8rem 1.5rem;
+    border: none;
+}
+
+.dash-table tbody td {
+    padding: 0.8rem 1.5rem;
+    vertical-align: middle;
+    font-size: 0.9rem;
+    border-color: #f0f0f0;
+}
+
+/* --- Status Badges --- */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.status-pendente {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.status-andamento {
+    background-color: #e3f2fd;
+    color: #1565c0;
+}
+
+.status-concluida {
+    background-color: #ede7f6;
+    color: #4A148C;
+}
+
+.badge-lista {
+    display: inline-block;
+    background-color: #f3e5f5;
+    color: #6A1B9A;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+/* --- Filtros Bar --- */
+.filtros-bar {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* --- Tarefa Card --- */
+.tarefa-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-left: 4px solid #6A1B9A;
+}
+
+.tarefa-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tarefa-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.8rem;
+}
+
+.tarefa-titulo {
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 0.3rem;
+}
+
+.tarefa-descricao {
+    font-size: 0.88rem;
+    color: #6c757d;
+    margin-bottom: 0;
+}
+
+.tarefa-acoes {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.tarefa-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.tarefa-meta {
+    font-size: 0.8rem;
+    color: #9e9e9e;
+}
+
+.tarefa-meta i {
+    margin-right: 0.2rem;
+}
+
+/* --- Lista Card --- */
+.lista-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-top: 4px solid #6A1B9A;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.lista-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.lista-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.lista-card-header h5 {
+    font-weight: 700;
+    color: #4A148C;
+    margin-bottom: 0;
+    font-size: 1.05rem;
+}
+
+.lista-card-header h5 i {
+    color: #6A1B9A;
+    margin-right: 0.3rem;
+}
+
+.lista-acoes {
+    display: flex;
+    gap: 0.3rem;
+}
+
+.lista-descricao {
+    font-size: 0.88rem;
+    color: #6c757d;
+    flex: 1;
+}
+
+.lista-stats {
+    display: flex;
+    gap: 1rem;
+}
+
+.lista-stat {
+    font-size: 0.8rem;
+    color: #9e9e9e;
+    font-weight: 500;
+}
+
+.lista-stat i {
+    color: #AB47BC;
+    margin-right: 0.2rem;
+}
+
+/* --- Perfil --- */
+.perfil-card-info {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.perfil-avatar {
+    font-size: 4rem;
+    color: #6A1B9A;
+    margin-bottom: 0.5rem;
+}
+
+.perfil-card-info h4 {
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 0.2rem;
+}
+
+.perfil-form-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.perfil-form-card h5 {
+    font-weight: 700;
+    color: #4A148C;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.perfil-form-card h5 i {
+    margin-right: 0.3rem;
+}
+
+.perfil-form-card .form-control:focus {
+    border-color: #6A1B9A;
+    box-shadow: 0 0 0 0.2rem rgba(106, 27, 154, 0.15);
+}
+
+/* --- Modal --- */
+.modal-gaia .modal-header {
+    border-bottom: 2px solid #f3e5f5;
+}
+
+.modal-gaia .modal-title {
+    font-weight: 700;
+    color: #4A148C;
+}
+
+.modal-gaia .modal-title i {
+    color: #6A1B9A;
+    margin-right: 0.3rem;
+}
+
+.modal-gaia .modal-footer {
+    border-top: 1px solid #f0f0f0;
+}
+
+.modal-gaia .form-control:focus,
+.modal-gaia .form-select:focus {
+    border-color: #6A1B9A;
+    box-shadow: 0 0 0 0.2rem rgba(106, 27, 154, 0.15);
+}
+
 /* --- Responsividade --- */
 @media (max-width: 768px) {
     .hero-section {

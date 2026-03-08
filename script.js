@@ -166,4 +166,146 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    /* --- Validacao Nova Tarefa --- */
+    var formNovaTarefa = document.getElementById('formNovaTarefa');
+    if (formNovaTarefa) {
+        formNovaTarefa.addEventListener('submit', function (e) {
+            var valido = true;
+            var titulo = document.getElementById('tarefaTitulo');
+            var lista = document.getElementById('tarefaLista');
+
+            limparValidacao(titulo);
+            limparValidacao(lista);
+
+            if (titulo.value.length === 0) {
+                mostrarErro(titulo, 'Informe o titulo da tarefa.');
+                valido = false;
+            } else if (titulo.value.length < 3) {
+                mostrarErro(titulo, 'O titulo deve ter pelo menos 3 caracteres.');
+                valido = false;
+            } else {
+                mostrarSucesso(titulo);
+            }
+
+            if (lista.value === '') {
+                mostrarErro(lista, 'Selecione uma lista.');
+                valido = false;
+            } else {
+                mostrarSucesso(lista);
+            }
+
+            if (!valido) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    /* --- Validacao Nova Lista --- */
+    var formNovaLista = document.getElementById('formNovaLista');
+    if (formNovaLista) {
+        formNovaLista.addEventListener('submit', function (e) {
+            var valido = true;
+            var nome = document.getElementById('listaNome');
+
+            limparValidacao(nome);
+
+            if (nome.value.length === 0) {
+                mostrarErro(nome, 'Informe o nome da lista.');
+                valido = false;
+            } else if (nome.value.length < 2) {
+                mostrarErro(nome, 'O nome deve ter pelo menos 2 caracteres.');
+                valido = false;
+            } else {
+                mostrarSucesso(nome);
+            }
+
+            if (!valido) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    /* --- Validacao Editar Perfil --- */
+    var formEditarPerfil = document.getElementById('formEditarPerfil');
+    if (formEditarPerfil) {
+        formEditarPerfil.addEventListener('submit', function (e) {
+            var valido = true;
+            var nome = document.getElementById('perfilNome');
+            var email = document.getElementById('perfilEmail');
+
+            limparValidacao(nome);
+            limparValidacao(email);
+
+            if (nome.value.length === 0) {
+                mostrarErro(nome, 'Informe seu nome.');
+                valido = false;
+            } else if (nome.value.length < 3) {
+                mostrarErro(nome, 'O nome deve ter pelo menos 3 caracteres.');
+                valido = false;
+            } else {
+                mostrarSucesso(nome);
+            }
+
+            if (email.value.length === 0) {
+                mostrarErro(email, 'Informe seu e-mail.');
+                valido = false;
+            } else if (email.value.indexOf('@') === -1 || email.value.indexOf('.') === -1) {
+                mostrarErro(email, 'Informe um e-mail valido.');
+                valido = false;
+            } else {
+                mostrarSucesso(email);
+            }
+
+            if (!valido) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    /* --- Validacao Alterar Senha --- */
+    var formAlterarSenha = document.getElementById('formAlterarSenha');
+    if (formAlterarSenha) {
+        formAlterarSenha.addEventListener('submit', function (e) {
+            var valido = true;
+            var senhaAtual = document.getElementById('senhaAtual');
+            var senhaNova = document.getElementById('senhaNova');
+            var senhaConfirmar = document.getElementById('senhaConfirmar');
+
+            limparValidacao(senhaAtual);
+            limparValidacao(senhaNova);
+            limparValidacao(senhaConfirmar);
+
+            if (senhaAtual.value.length === 0) {
+                mostrarErro(senhaAtual, 'Informe sua senha atual.');
+                valido = false;
+            } else {
+                mostrarSucesso(senhaAtual);
+            }
+
+            if (senhaNova.value.length === 0) {
+                mostrarErro(senhaNova, 'Informe a nova senha.');
+                valido = false;
+            } else if (senhaNova.value.length < 8) {
+                mostrarErro(senhaNova, 'A senha deve ter pelo menos 8 caracteres.');
+                valido = false;
+            } else {
+                mostrarSucesso(senhaNova);
+            }
+
+            if (senhaConfirmar.value.length === 0) {
+                mostrarErro(senhaConfirmar, 'Confirme a nova senha.');
+                valido = false;
+            } else if (senhaConfirmar.value !== senhaNova.value) {
+                mostrarErro(senhaConfirmar, 'As senhas nao coincidem.');
+                valido = false;
+            } else {
+                mostrarSucesso(senhaConfirmar);
+            }
+
+            if (!valido) {
+                e.preventDefault();
+            }
+        });
+    }
+
 });
