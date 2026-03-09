@@ -441,9 +441,18 @@ document.addEventListener('DOMContentLoaded', function () {
             /* Requisição AJAX via Fetch API */
             fetch('api/buscar_tarefas.php?termo=' + encodeURIComponent(termo))
                 .then(function (resposta) {
+                    if (!resposta.ok) {
+                        divMensagem.className = 'alert alert-danger mt-2';
+                        divMensagem.innerHTML = '<i class="bi bi-x-circle"></i> Erro ao buscar tarefas (código ' + resposta.status + '). Tente novamente.';
+                        divResultados.setAttribute('hidden', '');
+                        return null;
+                    }
                     return resposta.json();
                 })
                 .then(function (dados) {
+                    if (!dados) {
+                        return;
+                    }
                     if (dados.quantidade > 0) {
                         divMensagem.className = 'alert alert-success mt-2';
                         divMensagem.innerHTML = '<i class="bi bi-check-circle"></i> Foram encontradas ' + dados.quantidade + ' tarefa(s) para "<strong>' + termo + '</strong>".';
@@ -486,6 +495,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         divMensagem.innerHTML = '<i class="bi bi-x-circle"></i> Nenhuma tarefa encontrada para "<strong>' + termo + '</strong>".';
                         divResultados.setAttribute('hidden', '');
                     }
+                })
+                .then(null, function () {
+                    divMensagem.className = 'alert alert-danger mt-2';
+                    divMensagem.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Erro de conexão ao buscar tarefas. Verifique sua internet e tente novamente.';
+                    divResultados.setAttribute('hidden', '');
                 });
         });
 
