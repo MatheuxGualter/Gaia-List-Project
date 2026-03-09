@@ -17,7 +17,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     
     <!-- Gaia List CSS -->
-    <link href="style.css" rel="stylesheet">
+    <link href="style.css?v=2" rel="stylesheet">
 </head>
 <body>
 

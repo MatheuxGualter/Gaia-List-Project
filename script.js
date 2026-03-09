@@ -447,12 +447,20 @@ document.addEventListener('DOMContentLoaded', function () {
                         divResultados.setAttribute('hidden', '');
                         return null;
                     }
-                    return resposta.json();
+                    return resposta.text();
                 })
-                .then(function (dados) {
-                    if (!dados) {
+                .then(function (texto) {
+                    if (!texto) {
                         return;
                     }
+                    /* Verificar se a resposta é JSON valido (InfinityFree pode injetar HTML) */
+                    if (texto.charAt(0) !== '{') {
+                        divMensagem.className = 'alert alert-warning mt-2';
+                        divMensagem.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Resposta inesperada do servidor. Recarregue a página e tente novamente.';
+                        divResultados.setAttribute('hidden', '');
+                        return;
+                    }
+                    var dados = JSON.parse(texto);
                     if (dados.quantidade > 0) {
                         divMensagem.className = 'alert alert-success mt-2';
                         divMensagem.innerHTML = '<i class="bi bi-check-circle"></i> Foram encontradas ' + dados.quantidade + ' tarefa(s) para "<strong>' + termo + '</strong>".';
