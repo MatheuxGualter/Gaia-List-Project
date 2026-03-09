@@ -9,5 +9,3 @@ Thumbs.db
 .env
 .env.local
 .venv/
-
-includes/config.php

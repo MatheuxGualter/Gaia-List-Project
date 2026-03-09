@@ -1,3 +1,9 @@
+CREATE DATABASE IF NOT EXISTS bd_gaia_list
+    DEFAULT CHARACTER SET utf8mb4
+    DEFAULT COLLATE utf8mb4_general_ci;
+
+USE bd_gaia_list;
+
 -- ============================================================
 -- TABELA: usuarios
 -- Armazena os dados dos usuarios do sistema
