@@ -409,4 +409,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    /* ========================================
+       Confirmação - Excluir Conta
+    ======================================== */
+    var formExcluirConta = document.getElementById('formExcluirConta');
+    if (formExcluirConta) {
+        formExcluirConta.addEventListener('submit', function (e) {
+            var confirmacao = confirm('Tem certeza que deseja excluir sua conta? Esta ação é irreversível!');
+            if (!confirmacao) {
+                e.preventDefault();
+            }
+        });
+    }
+
+    /* ========================================
+       Linhas Clicáveis (Dashboard)
+    ======================================== */
+    var linhasClicaveis = document.querySelectorAll('[data-href]');
+    for (var idx = 0; idx < linhasClicaveis.length; idx++) {
+        linhasClicaveis[idx].addEventListener('click', function () {
+            window.location = this.getAttribute('data-href');
+        });
+    }
+
 });

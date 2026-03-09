@@ -118,7 +118,7 @@ while ($row) {
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
-                    <form id="formEditarUsuario" action="acoes/admin_atualizar.php" method="POST">
+                    <form id="formEditarUsuario" action="acoes/admin_atualizar.php" method="POST" novalidate>
                         <input type="hidden" id="editarUsuarioId" name="usuario_id" value="">
                         <div class="modal-body">
                             <div class="mb-3">

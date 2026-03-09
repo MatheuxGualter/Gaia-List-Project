@@ -151,8 +151,12 @@ while ($row) {
                             <tbody>
                                 <?php for ($i = 0; $i < count($tarefasRecentes); $i++) : ?>
                                 <?php $tarefa = $tarefasRecentes[$i]; ?>
-                                <tr>
-                                    <td class="fw-semibold"><?php echo $tarefa['titulo']; ?></td>
+                                <tr class="cursor-pointer" data-href="tarefa_detalhes.php?id=<?php echo $tarefa['id']; ?>">
+                                    <td class="fw-semibold">
+                                        <a href="tarefa_detalhes.php?id=<?php echo $tarefa['id']; ?>" class="text-decoration-none text-dark">
+                                            <?php echo $tarefa['titulo']; ?>
+                                        </a>
+                                    </td>
                                     <td>
                                         <span class="badge-lista"><?php echo $tarefa['lista']; ?></span>
                                     </td>

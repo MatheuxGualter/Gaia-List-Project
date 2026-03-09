@@ -128,7 +128,7 @@ for ($i = 0; $i < count($listas); $i++) {
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
-                    <form id="formNovaLista" action="acoes/lista_criar.php" method="POST">
+                    <form id="formNovaLista" action="acoes/lista_criar.php" method="POST" novalidate>
                         <div class="modal-body">
                             <!-- Nome -->
                             <div class="mb-3">
@@ -166,7 +166,7 @@ for ($i = 0; $i < count($listas); $i++) {
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
-                    <form id="formEditarLista" action="acoes/lista_editar.php" method="POST">
+                    <form id="formEditarLista" action="acoes/lista_editar.php" method="POST" novalidate>
                         <input type="hidden" id="editarListaId" name="lista_id" value="">
                         <div class="modal-body">
                             <!-- Nome -->

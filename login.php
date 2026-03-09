@@ -39,7 +39,7 @@ if (isset($_SESSION['mensagem'])) {
                     </div>
                     <?php endif; ?>
 
-                    <form id="formLogin" action="auth/login.php" method="POST">
+                    <form id="formLogin" action="auth/login.php" method="POST" novalidate>
                         <!-- Email -->
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="loginEmail" name="email"

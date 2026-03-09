@@ -1082,6 +1082,35 @@ main {
     text-decoration: underline;
 }
 
+/* --- Alterar Status Card --- */
+.status-change-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+    margin-bottom: 2rem;
+    border-left: 4px solid #AB47BC;
+}
+
+/* --- Cursor pointer para linhas clicaveis --- */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-pointer:hover {
+    background-color: #f5f3f7;
+}
+
+/* Perfil - Zona de Perigo */
+.perfil-danger-card {
+    border: 1px solid #dc3545;
+    border-left: 4px solid #dc3545;
+}
+
+.perfil-danger-card h5 {
+    color: #dc3545;
+}
+
 @media (max-width: 576px) {
     .hero-section h1 {
         font-size: 1.8rem;

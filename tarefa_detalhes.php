@@ -93,6 +93,28 @@ while ($row) {
                     <?php endif; ?>
                 </div>
 
+                <!-- Alterar Status (editor e comentador) -->
+                <?php if ($perfilUsuario === 'editor' || $perfilUsuario === 'comentador') : ?>
+                <div class="status-change-card">
+                    <form action="acoes/tarefa_status.php" method="POST" class="row g-2 align-items-end" novalidate>
+                        <input type="hidden" name="tarefa_id" value="<?php echo $tarefa->id; ?>">
+                        <div class="col-md-6">
+                            <label for="statusTarefa" class="form-label"><i class="bi bi-arrow-repeat"></i> Alterar Status</label>
+                            <select class="form-select" id="statusTarefa" name="status">
+                                <option value="pendente" <?php echo ($tarefa->status === 'pendente') ? 'selected' : ''; ?>>Pendente</option>
+                                <option value="andamento" <?php echo ($tarefa->status === 'andamento') ? 'selected' : ''; ?>>Em Andamento</option>
+                                <option value="concluida" <?php echo ($tarefa->status === 'concluida') ? 'selected' : ''; ?>>Concluída</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-gaia-primary w-100">
+                                <i class="bi bi-check-lg"></i> Salvar Status
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <?php endif; ?>
+
                 <!-- Secao de Comentarios -->
                 <div class="comentarios-section">
                     <div class="comentarios-header">
@@ -105,7 +127,7 @@ while ($row) {
                     <!-- Formulario de Novo Comentario (editor e comentador) -->
                     <?php if ($perfilUsuario === 'editor' || $perfilUsuario === 'comentador') : ?>
                     <div class="comentario-form-card">
-                        <form action="acoes/comentario_criar.php" method="POST">
+                        <form action="acoes/comentario_criar.php" method="POST" novalidate>
                             <input type="hidden" name="tarefa_id" value="<?php echo $tarefa->id; ?>">
                             <div class="mb-3">
                                 <label for="comentarioTexto" class="form-label">Adicionar comentário</label>
@@ -141,7 +163,7 @@ while ($row) {
                                     <strong><?php echo htmlspecialchars($c['autor_nome']); ?></strong>
                                     <span class="comentario-data"><?php echo $c['data_criacao']; ?></span>
                                 </div>
-                                <?php if ($c['usuario_id'] == $usuarioId || $perfilUsuario === 'editor') : ?>
+                                <?php if ($perfilUsuario === 'editor' || ($perfilUsuario === 'comentador' && $c['usuario_id'] == $usuarioId)) : ?>
                                 <form action="acoes/comentario_excluir.php" method="POST" class="d-inline">
                                     <input type="hidden" name="comentario_id" value="<?php echo $c['id']; ?>">
                                     <input type="hidden" name="tarefa_id" value="<?php echo $tarefa->id; ?>">

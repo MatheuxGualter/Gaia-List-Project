@@ -39,7 +39,7 @@ if (isset($_SESSION['mensagem'])) {
                     </div>
                     <?php endif; ?>
 
-                    <form id="formCadastro" action="auth/cadastrar.php" method="POST">
+                    <form id="formCadastro" action="auth/cadastrar.php" method="POST" novalidate>
                         <!-- Nome -->
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="cadastroNome" name="nome"

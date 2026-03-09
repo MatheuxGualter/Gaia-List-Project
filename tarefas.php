@@ -197,7 +197,7 @@ while ($row) {
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
-                    <form id="formNovaTarefa" action="acoes/tarefa_criar.php" method="POST">
+                    <form id="formNovaTarefa" action="acoes/tarefa_criar.php" method="POST" novalidate>
                         <div class="modal-body">
                             <!-- Título -->
                             <div class="mb-3">
@@ -257,7 +257,7 @@ while ($row) {
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
-                    <form id="formEditarTarefa" action="acoes/tarefa_editar.php" method="POST">
+                    <form id="formEditarTarefa" action="acoes/tarefa_editar.php" method="POST" novalidate>
                         <input type="hidden" id="editarTarefaId" name="tarefa_id" value="">
                         <div class="modal-body">
                             <!-- Título -->

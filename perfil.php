@@ -59,7 +59,7 @@ $usuario = array(
                         <!-- Dados Pessoais -->
                         <div class="perfil-form-card mb-4">
                             <h5><i class="bi bi-pencil-square"></i> Editar Dados</h5>
-                            <form id="formEditarPerfil" action="acoes/perfil_atualizar.php" method="POST">
+                            <form id="formEditarPerfil" action="acoes/perfil_atualizar.php" method="POST" novalidate>
                                 <div class="mb-3">
                                     <label for="perfilNome" class="form-label">Nome Completo</label>
                                     <input type="text" class="form-control" id="perfilNome" name="nome"
@@ -79,9 +79,9 @@ $usuario = array(
                         </div>
 
                         <!-- Alterar Senha -->
-                        <div class="perfil-form-card">
+                        <div class="perfil-form-card mb-4">
                             <h5><i class="bi bi-lock"></i> Alterar Senha</h5>
-                            <form id="formAlterarSenha" action="acoes/perfil_senha.php" method="POST">
+                            <form id="formAlterarSenha" action="acoes/perfil_senha.php" method="POST" novalidate>
                                 <div class="mb-3">
                                     <label for="senhaAtual" class="form-label">Senha Atual</label>
                                     <input type="password" class="form-control" id="senhaAtual" name="senha_atual"
@@ -102,6 +102,17 @@ $usuario = array(
                                 </div>
                                 <button type="submit" class="btn btn-gaia-primary">
                                     <i class="bi bi-lock"></i> Alterar Senha
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Excluir Conta -->
+                        <div class="perfil-form-card perfil-danger-card">
+                            <h5><i class="bi bi-exclamation-triangle"></i> Zona de Perigo</h5>
+                            <p class="text-muted">Ao excluir sua conta, todos os seus dados serão removidos permanentemente. Esta ação não pode ser desfeita.</p>
+                            <form id="formExcluirConta" action="acoes/perfil_excluir.php" method="POST">
+                                <button type="submit" class="btn btn-outline-danger">
+                                    <i class="bi bi-trash"></i> Excluir Minha Conta
                                 </button>
                             </form>
                         </div>
