@@ -922,6 +922,55 @@ main {
     box-shadow: 0 0 0 0.2rem rgba(106, 27, 154, 0.15);
 }
 
+/* --- Busca AJAX --- */
+.busca-ajax-container {
+    background-color: #ffffff;
+    border: 1px solid #e0d4e8;
+    border-radius: 12px;
+    padding: 1.25rem;
+}
+
+.busca-resultado-card {
+    background-color: #ffffff;
+    border: 1px solid #e0d4e8;
+    border-left: 4px solid #6A1B9A;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.busca-resultado-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.busca-resultado-titulo {
+    font-weight: 600;
+    font-size: 1rem;
+    color: #4A148C;
+    text-decoration: none;
+}
+
+.busca-resultado-titulo:hover {
+    color: #6A1B9A;
+    text-decoration: underline;
+}
+
+.busca-resultado-descricao {
+    font-size: 0.875rem;
+    color: #6c757d;
+    margin-bottom: 0.5rem;
+}
+
+.busca-resultado-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.8rem;
+}
+
 /* --- Responsividade --- */
 @media (max-width: 768px) {
     .hero-section {

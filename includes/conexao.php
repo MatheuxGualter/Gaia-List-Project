@@ -1,13 +1,8 @@
 <?php
-/* ============================================================
-   GAIA LIST - Conexao com o Banco de Dados (PDO)
-   FACOM32603 - Desenvolvimento Web I - UFU
-   ============================================================ */
-
-$db_host = 'localhost';
-$db_nome = 'bd_gaia_list';
-$db_usuario = 'root';
-$db_senha = '';
+$db_host = 'sql103.infinityfree.com';
+$db_nome = 'if0_41340420_bd_gaia_list';
+$db_usuario = 'if0_41340420';
+$db_senha = 'gualter321';
 
 $PDO = new PDO(
     "mysql:host=$db_host;dbname=$db_nome;charset=utf8mb4",

@@ -16,6 +16,9 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo isset($tituloPagina) ? $tituloPagina . ' - Gaia List' : 'Gaia List'; ?></title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">

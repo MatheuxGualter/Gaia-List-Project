@@ -93,6 +93,28 @@ while ($row) {
                     <?php endif; ?>
                 </div>
 
+                <!-- Busca AJAX -->
+                <div class="busca-ajax-container mb-4">
+                    <div class="row g-2 align-items-end">
+                        <div class="col-md-9">
+                            <label for="buscaTarefa" class="form-label form-label-sm text-muted">
+                                <i class="bi bi-search"></i> Buscar tarefas pelo título
+                            </label>
+                            <input type="text" class="form-control" id="buscaTarefa"
+                                   placeholder="Digite pelo menos 2 caracteres para buscar...">
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-gaia-primary w-100" id="btnBuscaAjax">
+                                <i class="bi bi-search"></i> Buscar
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Mensagem de resultado -->
+                    <div id="buscaAjaxMensagem" class="mt-2" hidden></div>
+                    <!-- Resultados da busca -->
+                    <div id="buscaAjaxResultados" class="mt-3" hidden></div>
+                </div>
+
                 <!-- Filtros -->
                 <div class="filtros-bar mb-4">
                     <form method="GET" action="tarefas.php" class="row g-2 align-items-end">

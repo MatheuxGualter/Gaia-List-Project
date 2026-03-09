@@ -410,6 +410,95 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* ========================================
+       Busca AJAX de Tarefas (Fetch API)
+    ======================================== */
+    var btnBuscaAjax = document.getElementById('btnBuscaAjax');
+    var campoBusca = document.getElementById('buscaTarefa');
+
+    if (btnBuscaAjax && campoBusca) {
+        btnBuscaAjax.addEventListener('click', function () {
+            var termo = campoBusca.value;
+            var divMensagem = document.getElementById('buscaAjaxMensagem');
+            var divResultados = document.getElementById('buscaAjaxResultados');
+
+            /* Limpar resultados anteriores */
+            divMensagem.removeAttribute('hidden');
+            divResultados.removeAttribute('hidden');
+            divResultados.innerHTML = '';
+
+            /* Validar termo */
+            if (termo.length < 2) {
+                divMensagem.className = 'alert alert-warning mt-2';
+                divMensagem.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Digite pelo menos 2 caracteres para buscar.';
+                divResultados.setAttribute('hidden', '');
+                return;
+            }
+
+            /* Mostrar carregando */
+            divMensagem.className = 'alert alert-info mt-2';
+            divMensagem.innerHTML = '<i class="bi bi-hourglass-split"></i> Buscando...';
+
+            /* Requisição AJAX via Fetch API */
+            fetch('api/buscar_tarefas.php?termo=' + encodeURIComponent(termo))
+                .then(function (resposta) {
+                    return resposta.json();
+                })
+                .then(function (dados) {
+                    if (dados.quantidade > 0) {
+                        divMensagem.className = 'alert alert-success mt-2';
+                        divMensagem.innerHTML = '<i class="bi bi-check-circle"></i> Foram encontradas ' + dados.quantidade + ' tarefa(s) para "<strong>' + termo + '</strong>".';
+
+                        /* Montar cards de resultado */
+                        var html = '';
+                        for (var i = 0; i < dados.tarefas.length; i++) {
+                            var t = dados.tarefas[i];
+
+                            var statusClasse = 'status-pendente';
+                            var statusTexto = 'Pendente';
+                            var statusIcone = 'bi-clock';
+                            if (t.status === 'andamento') {
+                                statusClasse = 'status-andamento';
+                                statusTexto = 'Em Andamento';
+                                statusIcone = 'bi-arrow-repeat';
+                            } else if (t.status === 'concluida') {
+                                statusClasse = 'status-concluida';
+                                statusTexto = 'Concluída';
+                                statusIcone = 'bi-check-circle';
+                            }
+
+                            html = html + '<div class="busca-resultado-card">';
+                            html = html + '<div class="busca-resultado-header">';
+                            html = html + '<a href="tarefa_detalhes.php?id=' + t.id + '" class="busca-resultado-titulo">' + t.titulo + '</a>';
+                            html = html + '<span class="status-badge ' + statusClasse + '"><i class="bi ' + statusIcone + '"></i> ' + statusTexto + '</span>';
+                            html = html + '</div>';
+                            if (t.descricao !== '') {
+                                html = html + '<p class="busca-resultado-descricao">' + t.descricao + '</p>';
+                            }
+                            html = html + '<div class="busca-resultado-meta">';
+                            html = html + '<span class="badge-lista">' + t.lista + '</span>';
+                            html = html + '<span class="tarefa-meta"><i class="bi bi-calendar3"></i> ' + t.data_criacao + '</span>';
+                            html = html + '</div>';
+                            html = html + '</div>';
+                        }
+                        divResultados.innerHTML = html;
+                    } else {
+                        divMensagem.className = 'alert alert-danger mt-2';
+                        divMensagem.innerHTML = '<i class="bi bi-x-circle"></i> Nenhuma tarefa encontrada para "<strong>' + termo + '</strong>".';
+                        divResultados.setAttribute('hidden', '');
+                    }
+                });
+        });
+
+        /* Permitir buscar com Enter */
+        campoBusca.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                btnBuscaAjax.click();
+            }
+        });
+    }
+
+    /* ========================================
        Confirmação - Excluir Conta
     ======================================== */
     var formExcluirConta = document.getElementById('formExcluirConta');
