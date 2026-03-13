@@ -2,6 +2,7 @@
 /* Teste de conexao com o banco de dados pelo navegador */
 require_once 'includes/conexao.php';
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>

@@ -1,4 +1,5 @@
 <?php
+
 $tituloPagina = 'Dashboard';
 $paginaAtiva = 'dashboard';
 require_once 'includes/header_privado.php';
