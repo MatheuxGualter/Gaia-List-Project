@@ -1,4 +1,5 @@
 <?php
+
 $tituloPagina = 'Administração de Usuários';
 $paginaAtiva = 'admin';
 require_once 'includes/header_privado.php';

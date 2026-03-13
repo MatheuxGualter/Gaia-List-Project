@@ -269,6 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+    
 
     /* --- Validacao Alterar Senha --- */
     var formAlterarSenha = document.getElementById('formAlterarSenha');
