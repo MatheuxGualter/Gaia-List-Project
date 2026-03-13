@@ -16,6 +16,7 @@ Sistema web de gerenciamento colaborativo de tarefas, desenvolvido em PHP puro c
 - Perfil do usuário com edição de dados, troca de senha e exclusão de conta
 - Painel administrativo para gerenciar perfis e excluir usuários
 
+
 ## Tecnologias
 
 | Camada | Tecnologia |
