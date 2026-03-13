@@ -21,15 +21,15 @@ Sistema web de gerenciamento colaborativo de tarefas, desenvolvido em PHP puro c
 
 | Camada | Tecnologia |
 |--------|-----------|
-| Backend | PHP (sem framework), PDO |
-| Banco de dados | MySQL / MariaDB |
+| Backend | PHP, PDO |
+| Banco de dados | MySQL |
 | Frontend | Bootstrap 5.3 + Bootstrap Icons (CDN) |
 | JavaScript | Vanilla JS |
 
 ## Pré-requisitos
 
 - PHP 7.4+
-- MySQL / MariaDB
+- MySQL
 - Servidor web (Apache, XAMPP, WAMP etc.)
 
 ## Instalação
